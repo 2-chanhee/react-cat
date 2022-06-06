@@ -22,9 +22,6 @@
       flex-wrap: wrap;
       gap: 15px;
     }
-    .favorites img {
-      width: 150px;
-    }
   </style>
   <body>
     <div id="app"></div>
@@ -42,22 +39,26 @@
     <script type="text/babel">
       console.log("야옹");
 
-      const Title = (props) => {
-        return <h1>{props.children}</h1>;
+      const Title = ({ children }) => {
+        return <h1>{children}</h1>;
       };
 
-      function CatItem(props) {
+      function CatItem({ title, img }) {
         return (
           <li>
-            <h3>{props.title}</h3>
-            <img src={props.img} />
+            <h3>{title}</h3>
+            <img
+              src={img}
+              /** style props 전달 */
+              style={{ width: "150px", border: "1px solid red" }}
+            />
           </li>
         );
       }
 
       function Favorites() {
         return (
-          <ul class="favorites">
+          <ul className="favorites">
             <CatItem
               img="https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn"
               title="cat1"
@@ -70,10 +71,10 @@
         );
       }
 
-      const MainCards = (props) => {
+      const MainCards = ({ img }) => {
         return (
-          <div class="main-card">
-            <img src={props.img} alt="고양이" width="400" />
+          <div className="main-card">
+            <img src={img} alt="고양이" width="400" />
             <button>🤍</button>
           </div>
         );
