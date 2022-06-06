@@ -14,6 +14,7 @@ function CatItem({ title, img }) {
         src={img}
         /** style props 전달 */
         style={{ width: "150px", border: "1px solid red" }}
+        alt="catItems"
       />
     </li>
   );
