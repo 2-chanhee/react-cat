@@ -72,17 +72,32 @@
       }
 
       const MainCards = ({ img }) => {
+        function handlerHeartClick() {
+          console.log("하트 클릭");
+        }
+        function handlerHeartMouseOver() {
+          console.log("하트 오버");
+        }
         return (
           <div className="main-card">
             <img src={img} alt="고양이" width="400" />
-            <button>🤍</button>
+            <button
+              onClick={handlerHeartClick}
+              onMouseOver={handlerHeartMouseOver}
+            >
+              🤍
+            </button>
           </div>
         );
       };
 
       const Forms = () => {
+        function handleFormSubmit(event) {
+          event.preventDefault();
+          console.log("폼 전송");
+        }
         return (
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <input
               type="text"
               name="name"
