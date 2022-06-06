@@ -91,11 +91,8 @@
         );
       };
 
-      const Forms = () => {
-        function handleFormSubmit(event) {
-          event.preventDefault();
-          console.log("폼 전송");
-        }
+      // props로 function을 넘겨준다.
+      const Forms = ({ handleFormSubmit }) => {
         return (
           <form onSubmit={handleFormSubmit}>
             <input
@@ -108,20 +105,38 @@
         );
       };
 
-      // Tag 안에 적으면 props.children으로 넘어옴(Title같은 경우)
-      const app = (
-        <div>
-          <Title>1번째 고양이 가라사대 zzz</Title>
-          <Forms />
-          <MainCards img="https://cataas.com/cat/60b73094e04e18001194a309/says/react" />
-          <Favorites />
-        </div>
-      );
+      const App = () => {
+        const CAT1 =
+          "https://cataas.com/cat/60b73094e04e18001194a309/says/react";
+        const CAT2 =
+          "https://cataas.com//cat/5e9970351b7a400011744233/says/inflearn";
+        const CAT3 =
+          "https://cataas.com/cat/595f280b557291a9750ebf65/says/JavaScript";
+
+        const [counter, setCounter] = React.useState(1); // 초기값 1
+        const [mainCat, setMainCat] = React.useState(CAT1);
+
+        function handleFormSubmit(event) {
+          event.preventDefault();
+          console.log("폼 전송");
+          setCounter(counter + 1);
+          setMainCat(CAT2);
+        }
+
+        return (
+          <div>
+            <Title>{counter}번째 고양이 가라사대</Title>
+            <Forms handleFormSubmit={handleFormSubmit} />
+            <MainCards img={mainCat} />
+            <Favorites />
+          </div>
+        );
+      };
 
       const div1 = document.querySelector("#app");
 
       // element들을 div1에 표현해준다.
-      ReactDOM.render(app, div1);
+      ReactDOM.render(<App />, div1);
     </script>
   </body>
 </html>
