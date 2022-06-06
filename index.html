@@ -37,8 +37,6 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script type="text/babel">
-      console.log("야옹");
-
       const Title = ({ children }) => {
         return <h1>{children}</h1>;
       };
@@ -66,17 +64,17 @@
         );
       }
 
-      const MainCards = ({ img, handlerHeartClick }) => {
+      const MainCards = ({ img, onHeartClick }) => {
         return (
           <div className="main-card">
             <img src={img} alt="고양이" width="400" />
-            <button onClick={handlerHeartClick}>🤍</button>
+            <button onClick={onHeartClick}>🤍</button>
           </div>
         );
       };
 
       // props로 function을 넘겨준다.
-      const Forms = () => {
+      const Forms = ({ updateMainCat }) => {
         const includesHangul = (text) => /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/i.test(text);
         const [value_, setValue] = React.useState("");
         const [errorMessage, setErrorMessage] = React.useState("");
@@ -95,7 +93,12 @@
           e.preventDefault();
           setErrorMessage("");
 
-          if (value_ === "") setErrorMessage("값을 입력해주세요");
+          if (value_ === "") {
+            setErrorMessage("값을 입력해주세요");
+            return;
+          }
+
+          updateMainCat();
         }
 
         return (
@@ -125,24 +128,20 @@
         const [mainCat, setMainCat] = React.useState(CAT1);
         const [favorites, setFavorites] = React.useState([CAT1, CAT2]);
 
-        function handleFormSubmit(event) {
-          event.preventDefault();
-          console.log("폼 전송");
-          setCounter(counter + 1);
+        function updateMainCat() {
           setMainCat(CAT2);
+          setCounter(counter + 1);
         }
 
         function handlerHeartClick() {
-          console.log("하트 클릭");
-
           setFavorites([...favorites, CAT3]);
         }
 
         return (
           <div>
             <Title>{counter}번째 고양이 가라사대</Title>
-            <Forms handleFormSubmit={handleFormSubmit} />
-            <MainCards img={mainCat} handlerHeartClick={handlerHeartClick} />
+            <Forms updateMainCat={updateMainCat} />
+            <MainCards img={mainCat} onHeartClick={handlerHeartClick} />
             <Favorites favorites={favorites} />
           </div>
         );
